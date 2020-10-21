@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package applicationService;
+
+message FetchRequest {
+  string url = 1;
+}
+
+message FetchResponse {
+  uint32 code = 1;
+  string errorMessage = 2;
+}
+
+enum SortingOrder {
+  ASC = 0;
+  DESC = 1;
+}
+
+message ListRequest {
+  uint64 paginationCursor = 1;
+  uint64 paginationCount = 2;
+  string sortingField = 3;
+  SortingOrder sortingOrder = 4;
+}
+
+message ListResponse {
+  uint32 code = 1;
+  string cursor = 2;
+}
+
+service GrpcService {
+  rpc Fetch(FetchRequest) returns (FetchResponse) {}
+  rpc List(ListRequest) returns (ListResponse) {}
+}
